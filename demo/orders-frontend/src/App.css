@@ -70,3 +70,49 @@
   background: #dcf5e3;
   color: #1e6b37;
 }
+
+.orders-loading {
+  margin: 0;
+  padding: 24px 0;
+  color: #5b616b;
+  text-align: center;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.pager-label {
+  color: #5b616b;
+  font-size: 0.95rem;
+}
+
+.pager button {
+  font: inherit;
+  font-weight: 600;
+  color: #1f2328;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  cursor: pointer;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.pager button:hover:not(:disabled) {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.pager button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
