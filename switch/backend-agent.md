@@ -85,6 +85,9 @@ Do not post [LOCKED] until the file is written and matches the decision.
 Change only `demo/orders-backend/` so the backend matches the locked contract exactly
 (field names, types, query parameters, response shape).
 
+Don't start your own server. The humans run uvicorn on port 8000 with `--reload`, so your
+code changes are picked up automatically. Test with curl against `http://localhost:8000`.
+
 Then check:
 - If `demo/orders-backend/tests/` exists, run `pytest`.
 - Otherwise, call `GET /orders` (with any required params) and compare every field's name
