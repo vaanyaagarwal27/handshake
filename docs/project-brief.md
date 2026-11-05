@@ -103,16 +103,24 @@ handshake/
 ## 6. Room flow (the demo)
 
 1. **[DISCOVERY]** Hamsini posts: "We need order tracking with an ETA on the orders screen."
-   Each agent reads only its own folder.
-2. **[PROPOSAL]** Each agent posts its side in 3–6 lines. **Whichever agent posts second also posts
-   the conflict list**, e.g.
+   The request @mentions only @frontend-agent. Each agent reads only its own folder.
+2. **[PROPOSAL]** @frontend-agent proposes first (3–6 lines) and @mentions @backend-agent when
+   done. @backend-agent proposes second and **always** posts the conflict list right after, e.g.
    `ETA: frontend wants minutesRemaining · backend has eta (ISO timestamp) ❌`
+   @backend-agent then asks the humans in the room to decide each ❌.
 3. **[ARBITRATION]** A human decides. Agents never decide conflicts themselves; they repeat the
    decision back.
-4. **[LOCKED]** backend-agent writes `contract/openapi.yaml` and posts "🔒 contract v1 locked".
+4. **[LOCKED]** backend-agent writes `contract/openapi.yaml` and posts "🔒 contract v1 locked
+   @frontend-agent".
 5. **[BUILD]** Each agent changes only its own app, runs its check, and reports ✅ / ❌.
-6. **[DRIFT]** (stretch) Vaanya runs `scripts/sabotage.sh`, the checks go ❌, frontend-agent fixes
-   its side, and they go ✅ again.
+6. **[DRIFT]** (stretch) Vaanya runs `scripts/sabotage.sh` (renames `eta` → `estimated_arrival`
+   in the backend), then posts "@backend-agent check the contract". @backend-agent reads
+   `main.py` and `data.py`, finds the drift, and reports which fields differ. A human picks
+   "update the contract". @backend-agent writes `contract/openapi.yaml` v2 and posts
+   "🔒 contract v2 locked @frontend-agent" with exactly what changed. @frontend-agent updates
+   its side and reports ✅.
+
+Every handoff between agents must @mention the other agent.
 
 Agent messages stay short and start with a phase tag: `[DISCOVERY]`, `[PROPOSAL]`, `[ARBITRATION]`,
 `[LOCKED]`, `[BUILD]`, `[DRIFT]`.
