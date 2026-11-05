@@ -1,7 +1,15 @@
-import { mockOrders } from './mockOrders'
-import type { Order } from './mockOrders'
+import type { components, paths } from './api-types'
 
-export type { Order }
+type ApiOrder = components['schemas']['Order']
+type ApiResponse =
+  paths['/orders']['get']['responses'][200]['content']['application/json']
+
+export type Order = {
+  id: number
+  item: string
+  status: 'preparing' | 'on the way' | 'delivered'
+  minutesRemaining: number
+}
 
 export type OrdersPage = {
   orders: Order[]
@@ -10,15 +18,28 @@ export type OrdersPage = {
   total: number
 }
 
-// Real call for later:
-// GET http://localhost:8000/orders?page=1&limit=5
-export async function fetchOrders(page: number, limit: number): Promise<OrdersPage> {
-  await new Promise((resolve) => setTimeout(resolve, 300))
-  const start = (page - 1) * limit
+function etaToMinutes(eta: string): number {
+  const diff = new Date(eta).getTime() - Date.now()
+  return Math.max(0, Math.round(diff / 60000))
+}
+
+function mapOrder(raw: ApiOrder): Order {
   return {
-    orders: mockOrders.slice(start, start + limit),
-    page,
-    limit,
-    total: mockOrders.length,
+    id: raw.id,
+    item: raw.item,
+    status: raw.status,
+    minutesRemaining: etaToMinutes(raw.eta),
+  }
+}
+
+export async function fetchOrders(page: number, limit: number): Promise<OrdersPage> {
+  const res = await fetch(`http://localhost:8000/orders?page=${page}&limit=${limit}`)
+  if (!res.ok) throw new Error(`Failed to fetch orders: ${res.status}`)
+  const data: ApiResponse = await res.json()
+  return {
+    orders: data.orders.map(mapOrder),
+    page: data.page,
+    limit: data.limit,
+    total: data.total,
   }
 }
