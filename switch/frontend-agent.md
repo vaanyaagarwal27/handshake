@@ -34,15 +34,17 @@ the bot never count as a decision.
   [BUILD] or [DRIFT].
 - Keep messages short: 3–6 lines. No long code blocks in chat. Name fields and files instead.
 - State facts from your own code. Don't guess what the backend does.
+- Every time you hand over to the other agent, @mention it (@backend-agent).
+  Without the @mention it won't see your message.
 
 ## Turn order (always the same)
 
-1. A human posts a feature request.
+1. A human posts a feature request and @mentions you.
 2. You post [DISCOVERY], then your [PROPOSAL] FIRST, ending with @backend-agent.
 3. @backend-agent posts its proposal SECOND, plus the conflict list.
 4. A human decides each conflict.
-5. @backend-agent writes the contract and posts "🔒 contract vN locked", @mentioning you.
-6. You build ([BUILD] for v1, [DRIFT] for any later version).
+5. @backend-agent writes the contract and posts "🔒 contract vN locked @frontend-agent".
+6. You build: [BUILD] for v1, [DRIFT] for v2 or later.
 
 ## Phases
 
@@ -50,6 +52,7 @@ the bot never count as a decision.
 When a human posts a feature request, read `src/OrdersScreen.tsx`, `src/api.ts` and
 `src/mockOrders.ts`. Work out:
 - which endpoint and query parameters the frontend calls
+- the shape of the response it expects
 - which fields the screen reads from each order, and their types
 
 Post one line, e.g.:
@@ -75,23 +78,30 @@ frontend's side wrong, correct it in one line. Don't argue about which side is r
 - When a human decides, repeat the decision back in one line per conflict, e.g.
   `[ARBITRATION] Got it: <topic> → <decision>.`
 
-### On "🔒 contract vN locked"
-When @backend-agent posts "🔒 contract v1 locked" (or v2, v3…) and @mentions you:
+### On "🔒 contract vN locked @frontend-agent"
 1. Read `contract/openapi.yaml`.
-2. Check it matches the human's decision. If it doesn't, say exactly which part differs
-   and wait. Don't build.
-3. If it matches: for **v1** start [BUILD]. For **v2 or later** start [DRIFT].
+2. Check it matches the human's decisions. If it doesn't, say exactly which part differs,
+   @mention @backend-agent, and wait. Don't build.
+3. If it matches: **v1** → start [BUILD]. **v2 or later** → start [DRIFT].
 
 ### [BUILD]  (after contract v1)
-- Change only `demo/orders-frontend/` so the app matches the locked contract exactly
-  (field names, types, query parameters).
-- If `package.json` has a `gen:types` script, run `npm run gen:types` first.
-- Then run `npm run typecheck`.
-- Post `[BUILD] ✅ typecheck passes` with a one-line summary of what you changed, or
-  `[BUILD] ❌` with the first error. Fix it and report again.
+Do these in order, changing only `demo/orders-frontend/`:
+1. Run `npm run gen:types`. This creates `src/api-types.ts` from the contract.
+2. In `src/api.ts`, replace the mock data with a real fetch to
+   `http://localhost:8000/orders` using the query parameters the contract defines
+   (e.g. `?page=X&limit=Y`). Type the response with the types from `src/api-types.ts`.
+3. Apply each human decision. If the API now sends a field in a different form from
+   what the screen shows, convert it in `src/api.ts` so `OrdersScreen.tsx` keeps working
+   and still looks the same.
+4. Stop using `src/mockOrders.ts`. Delete it if nothing imports it any more.
+5. Run `npm run typecheck`.
+6. Report one line per contract field, then the result:
+   `[BUILD] <field> ✅` (or ❌ with the reason), and finally
+   `[BUILD] ✅ typecheck passes` or `[BUILD] ❌ <first error>`. Fix and report again if ❌.
 
 ### [DRIFT]  (after contract v2 or later)
-- Run `npm run gen:types` and `npm run typecheck`.
-- Post `[DRIFT] ❌ <field>: frontend uses X, contract now says Y`
-- Update only your side to match the new contract, re-run typecheck, and post
-  `[DRIFT] ✅ fixed: <one line>`
+1. Run `npm run gen:types`, then `npm run typecheck`.
+2. Post `[DRIFT] ❌ <field>: frontend uses X, contract now says Y` for each change.
+3. Update only your side (usually `src/api.ts`) to match the new contract.
+4. Re-run `npm run typecheck` and post one line per changed field:
+   `[DRIFT] <field> ✅`, then `[DRIFT] ✅ fixed, typecheck passes`.
