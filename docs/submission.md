@@ -6,7 +6,12 @@
 Our target: submit by **6:00 PM IST on Nov 7**, so we have buffer for upload problems.
 
 Event page: https://www.wemakedevs.org/hackathons/switch
+## Judging (weights)
 
+- **Use of Switch, 30%:** Is Switch central, and would the project stop working without it?
+- **Technical execution, 25%:** Does it run, and could someone clone the repo and reproduce it?
+- **Creativity and impact, 25%:** Is it a fresh idea that solves a problem a real team has?
+- **Presentation, 20%:** Do the demo video and README make clear how Switch is used?
 ## Form fields
 
 ⚠️ TODO: the public event page doesn't list the form fields. Log in on wemakedevs.org, open
