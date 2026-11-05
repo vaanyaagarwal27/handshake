@@ -1,41 +1,45 @@
-# Handshake — demo video script (draft)
+# Handshake — demo video script (draft v2)
 
 Length: **3:00 max**. Track 01 — Best Business Workflow.
 Voices: **H** = Hamsini (frontend dev), **V** = Vaanya (backend dev).
-Speed up any waiting (agents thinking, npm installs) and add a small "⏩ sped up" label.
+Recorded in a clean channel: **#handshake-demo**.
+Speed up any waiting (agents thinking, installs) and add a small "⏩ sped up" label.
 
-## Screen setup for recording
+## Screen setup (all on Vaanya's Mac, where both agents run)
 
-- Left: Discord, #handshake channel (zoom so messages are readable: Cmd + a few times)
-- Right: VS Code or terminal, depending on the shot
-- Browser tab ready at http://localhost:5173
-- Dark/light theme the same across all windows
-- Close notifications (Do Not Disturb on)
+- Left: Discord, #handshake-demo (zoomed in so messages are readable)
+- Right: terminal / VS Code, depending on the shot
+- Backend running at http://localhost:8000, frontend at http://localhost:5173
+- Same theme in every window; Do Not Disturb on
 
 ## Shots
 
 | # | Time | On screen | Narration |
 |---|------|-----------|-----------|
-| 1 | 0:00–0:15 | Title card: "Handshake — frontend and backend agents agree on the API before they build it" | **H:** "Frontend and backend teams lose days to one sentence: *that's not the shape we agreed on.*" |
-| 2 | 0:15–0:30 | Simple diagram: two agents → one Discord room → `contract/openapi.yaml` | **V:** "Handshake puts each side's coding agent in one Switch room. Each one reads only its own code, they negotiate the contract, and a human makes the final call." |
-| 3 | 0:30–0:45 | Split: orders screen in browser (Arriving in N min, Prev/Next) + backend JSON in terminal (eta timestamp, all orders) | **H:** "Here's our starting point. My screen expects minutes remaining and pagination." **V:** "My API returns an ETA timestamp and every order at once. Neither of us knows that yet." |
-| 4 | 0:45–0:55 | Discord: Hamsini posts "We need order tracking with an ETA on the orders screen." | **H:** "I just ask for the feature." |
-| 5 | 0:55–1:20 | Discord: `[DISCOVERY]` lines, then both `[PROPOSAL]` messages (⏩ sped up) | **V:** "Each agent reads only its own folder and posts what its side actually does." |
-| 6 | 1:20–1:40 | **Hero shot.** Zoom into the conflict list: ETA ❌, Pagination ❌ | **H:** "And here's the important part: instead of guessing, they surface the conflicts. Two mismatches, found before anyone wrote integration code." |
-| 7 | 1:40–1:55 | Discord: human posts the decision: "timestamp; frontend computes minutes; add pagination." Agents repeat it back. | **V:** "Agents don't decide. A human does, in one message." |
-| 8 | 1:55–2:10 | Discord `🔒 contract v1 locked`, then VS Code showing `contract/openapi.yaml` | **V:** "The backend agent writes the contract. It's now the single source of truth for both sides." |
-| 9 | 2:10–2:30 | Terminal: `scripts/check-contract.sh` → backend ✅ frontend ✅. Browser: screen still shows "Arriving in N min", now computed from the timestamp, Page 1 of 3 | **H:** "Both agents build against it. pytest checks the backend's real responses, TypeScript checks the frontend. Both green." |
-| 10 | 2:30–2:50 | *(stretch)* Terminal: `scripts/sabotage.sh` → check ❌ → Discord `[DRIFT]` → frontend-agent fixes → check ✅ | **V:** "Later, someone renames a field." **H:** "The check catches the drift, and my agent fixes its side in seconds." |
-| 11 | 2:50–3:00 | End card: Handshake · Team Larpers · repo link | **H:** "Handshake: agree on the API first, then build. Thanks!" |
+| 1 | 0:00–0:12 | Title card: "Handshake: frontend and backend agents agree on the API before they build" | **H:** "Frontend and backend teams lose days to one sentence: *that's not the shape we agreed on.*" |
+| 2 | 0:12–0:25 | Diagram: frontend-agent + backend-agent → one Discord room → `contract/openapi.yaml` | **V:** "Handshake puts each side's coding agent in one Switch room. Each reads only its own code, they surface conflicts, and a human makes the call." |
+| 3 | 0:25–0:40 | Split: orders screen in the browser (Arriving in N min, Prev/Next) + `curl localhost:8000/orders` in the terminal (plain list, eta timestamps) | **H:** "My screen expects minutes remaining, pages, and a wrapped response." **V:** "My API returns every order as a plain list, with an ETA timestamp. Neither agent knows that yet." |
+| 4 | 0:40–0:48 | Discord: H posts "@frontend-agent we need order tracking with an ETA on the orders screen." | **H:** "I ask my agent for the feature. That's it." |
+| 5 | 0:48–1:05 | frontend-agent: `[DISCOVERY]`, then `[PROPOSAL]` ending "@backend-agent your turn" (⏩) | **H:** "My agent reads only the frontend folder, proposes first, and hands over." |
+| 6 | 1:05–1:20 | backend-agent: `[PROPOSAL]` from the backend's side (⏩) | **V:** "The backend agent reads only the backend folder and answers with what it actually serves." |
+| 7 | 1:20–1:42 | **Hero shot.** Zoom into the conflict list: ETA ❌ · Pagination ❌ · Response shape ❌ | **H:** "And this is the point: three mismatches, found in a minute, before anyone wrote integration code." |
+| 8 | 1:42–1:55 | Discord: human decision ("eta stays a timestamp, frontend computes minutes; add page/limit; wrap the response"). Agents repeat it back. | **V:** "The agents never settle it themselves. A human decides, in one message." |
+| 9 | 1:55–2:05 | Discord "🔒 contract v1 locked @frontend-agent" → VS Code on `contract/openapi.yaml` | **V:** "The backend agent writes the contract. Now it's the single source of truth." |
+| 10 | 2:05–2:25 | frontend-agent `[BUILD]` lines, one ✅ per field → `scripts/check-contract.sh` backend ✅ frontend ✅ → browser shows real orders, "Arriving in N min", Page 1 of 3 | **H:** "Both sides build against it. pytest checks the backend, TypeScript checks the frontend. All green, with real data." |
+| 11 | 2:25–2:52 | *(stretch)* V runs `scripts/sabotage.sh` → posts "@backend-agent check the contract" → backend-agent reports the drift → human: "update the contract" → "🔒 contract v2 locked @frontend-agent" → frontend-agent `[DRIFT]` ❌ → ✅ → check ✅ | **V:** "Later, someone renames a field." **H:** "The check catches it, a human approves the change, and my agent updates its side." |
+| 12 | 2:52–3:00 | End card: Handshake · Team Larpers · repo link | **H:** "Handshake: agree on the API first, then build. Thanks!" |
 
 ## If drift is cut (backup timing)
 
-Drop shot 10. Give shot 6 (conflict list) and shot 9 (both ✅) 10 more seconds each, so viewers can read them.
+Drop shot 11. Give shot 7 (conflict list) and shot 10 (all green) about 12 more seconds each,
+so viewers can read them, and end at ~2:40.
 
 ## Recording checklist
 
-- [ ] Reset both demo apps to the seeded mismatch before every take
-- [ ] Record several takes; pick the cleanest agent run
-- [ ] Record narration separately if live talking is awkward
-- [ ] Check that every Discord message is readable at 1080p
+- [ ] Fresh, empty #handshake-demo channel for each take
+- [ ] Both demo apps reset to the seeded mismatch before every take (agree how with Vaanya)
+- [ ] Backend (:8000) and frontend (:5173) running before recording starts
+- [ ] Record several takes; keep the cleanest agent run
+- [ ] Narration can be recorded separately and laid over the video
+- [ ] Every Discord message readable at 1080p
 - [ ] Final length ≤ 3:00
