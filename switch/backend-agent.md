@@ -36,33 +36,31 @@ contract and write the locked contract file.
 
 ## Phases
 
-### [DISCOVERY]
-When a human posts a feature request, read `main.py` and `data.py`. Work out:
+### [DISCOVERY] + [PROPOSAL]
+When @frontend-agent @mentions you with its proposal, read `main.py` and `data.py`. Work out:
 - which endpoint the backend exposes
 - which fields each order has, and their types
 
-Post one line saying you've read your side, e.g.:
-`[DISCOVERY] Read main.py, data.py. Ready to propose.`
+Post [DISCOVERY] + [PROPOSAL] + the conflict list together in one message.
+Lead with the [DISCOVERY] line, e.g.:
+`[DISCOVERY] Read main.py, data.py. Proposing now.`
 
-### [PROPOSAL]
-Read `main.py` and `data.py` and report what `GET /orders` **actually returns right now**.
+Then immediately post your proposal — what `GET /orders` **actually returns right now**.
 Describe the real API — never the ideal one. Format:
 
 ```
 [PROPOSAL] backend provides:
 - GET /orders (no query params)
-- response: [ ... ] (plain list, no wrapper, no pagination)
+- response: [ ... ] (plain list)
 - each order: { id: int, item: str, status: str, eta: str }
 - example: { "id": 1, "item": "Chicken Biryani", "status": "on the way", "eta": "2026-11-05T19:15:00+05:30" }
 ```
 
-@frontend-agent always proposes first. You always propose second. Wait for @frontend-agent
-to @mention you, then post your proposal followed immediately by the conflict list
-(one line per conflict):
+Then immediately post the conflict list (one line per conflict, based on what @frontend-agent reported):
 
 ```
 [PROPOSAL] conflicts:
-- eta: frontend wants minutesRemaining (number) · backend has eta (ISO 8601 string) ❌
+- <field>: frontend wants X · backend has Y ❌
 ```
 
 Then ask the humans in the room to decide each ❌.
@@ -72,14 +70,14 @@ Then ask the humans in the room to decide each ❌.
   version" (or yours) without a human decision.
 - If @frontend-agent suggests a resolution, reply that you're waiting for a human.
 - When a human decides, repeat the decision back in one line per conflict so it's clear,
-  e.g. `[ARBITRATION] Got it: eta → keep as ISO 8601 timestamp; frontend computes minutes.`
+  e.g. `[ARBITRATION] Got it: <topic> → <decision>.`
 
 ### [LOCKED]
 Write `contract/openapi.yaml` (OpenAPI 3) that matches the human's decision exactly —
 field names, types, query parameters, response shape. Then post:
 
 `🔒 contract v1 locked @frontend-agent` followed by one line per field summarising what was
-decided, e.g. `eta: string (date-time ISO 8601) ✅  minutesRemaining: computed by frontend, not in response`.
+decided, e.g. `<field>: <type> ✅`.
 
 Do not post [LOCKED] until the file is written and matches the decision.
 
@@ -93,8 +91,8 @@ Then check:
   and type against `contract/openapi.yaml`.
 
 Report one line per field:
-- `eta: string (date-time) ✅`
-- `❌ page: expected query param, not implemented`
+- `<field>: <type> ✅`
+- `❌ <field>: expected <type>, not present`
 
 Also allow CORS from `http://localhost:5173` so the frontend can call the API.
 
