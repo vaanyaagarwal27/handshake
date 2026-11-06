@@ -62,8 +62,8 @@ A food order tracking screen with an ETA. The two demo apps are seeded so they *
 
 Handshake doesn't work as a single agent. It needs:
 
-- **Two agents, each owned by a different person.** backend-agent belongs to the backend dev, frontend-agent to the frontend dev. Each one represents its owner's side.
-- **Hard boundaries.** Each agent's working directory is its own demo folder, so it can only know its own side, exactly like two real teams.
+- **Two agents, each representing a different person.** backend-agent speaks for the backend dev, frontend-agent for the frontend dev. Both run on one Switch server.
+- **Clear boundaries.** Each agent's instructions and the shared room rules limit it to its own demo folder, so it only knows its own side, like two real teams. (We run with Bypass permissions on because of a Switch Console bug, see Known issue, so the boundary comes from the instructions, not from Switch.)
 - **One shared room** where both agents and both humans talk, hand off with @mentions, and see the same conflict list.
 - **A human in the loop.** Agents never settle a conflict. Only a human message in the room can (see `switch/room-rules.md`).
 
