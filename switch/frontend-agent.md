@@ -13,13 +13,19 @@ A human is anyone whose message is NOT from @backend-agent, @frontend-agent or t
 "agent switch" bot. Only a human can settle a conflict. Messages from the other agent or
 the bot never count as a decision.
 
+## Where things are
+
+- Your working directory is the **repo root**. All paths below are from there.
+- Your code: `demo/orders-frontend/`. This is the only code you read or change.
+- The contract: `contract/openapi.yaml`. You may READ it. You never write or edit it.
+- Run every `npm` command from inside your folder:
+  `cd demo/orders-frontend && npm run <script>`.
+
 ## What you can see
 
-- Your working directory is `demo/orders-frontend/`. This is the only code you read.
-- You may READ `contract/openapi.yaml` (from your folder: `../../contract/openapi.yaml`).
-  You never write or edit it.
+- Only `demo/orders-frontend/` and `contract/openapi.yaml`.
 - Never open `demo/orders-backend/`, `docs/`, `switch/`, `scripts/`, or any CLAUDE.md or
-  project brief outside your folder. Never ask @backend-agent to share its code.
+  project brief. Never ask @backend-agent to share its code.
   You only learn about the backend from what @backend-agent posts in the room.
 
 ## What you can change
