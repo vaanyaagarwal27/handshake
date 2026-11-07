@@ -27,7 +27,7 @@ Built for the **Flip the Switch Hackathon** (WeMakeDevs × DevTools Academy × S
 3. [Key Capabilities](#key-capabilities)
 4. [The Demo Scenario](#the-demo-scenario)
 5. [Why Switch Is Essential](#why-switch-is-essential)
-6. [Why Not Just Write the Spec First, or Use Pact?](Spec-first and contract-testing tools like Pact are great once a contract exists, but someone has to write it, and they write what they *think* each side does. Handshake's agents **discover** the mismatches by reading the real code on each side, so the conflict list reflects what the code actually does, not what someone remembers. A human settles the gaps in one message, and from then on the locked contract works like any contract-first setup: generated types, a check on every change, and drift caught early.
+6. [Why Not Just Write the Spec First, or Use Pact?](#why-not-just-write-the-spec-first-or-use-pact)
 7. [Quickstart: Run It Yourself](#quickstart-run-it-yourself)
 8. [Core Workflows](#core-workflows)
    - [Negotiate and Lock](#workflow-1-negotiate-and-lock)
@@ -38,7 +38,8 @@ Built for the **Flip the Switch Hackathon** (WeMakeDevs × DevTools Academy × S
 11. [Project Directory Layout](#project-directory-layout)
 12. [Running the Demo Again](#running-the-demo-again)
 13. [Known Issue: ZodError on Permission Prompts](#known-issue-zoderror-on-permission-prompts)
-14. [Team](#team)
+14. [What's Next](#whats-next)
+15. [Team](#team)
 
 ---
 
@@ -175,7 +176,7 @@ Switch provides all four: agents connected to a team chat, per-agent instruction
 
 ## Why Not Just Write the Spec First, or Use Pact?
 
-Contract-first tools assume someone already wrote the contract. Handshake has each side's agent state what its code really does or needs, and turns the gaps into a list a human settles in one message. After that, the locked contract works like any contract-first setup: generated types, a check on every change, and drift caught early.
+Spec-first and contract-testing tools like Pact are great once a contract exists, but someone has to write it, and they write what they *think* each side does. Handshake's agents **discover** the mismatches by reading the real code on each side, so the conflict list reflects what the code actually does, not what someone remembers. A human settles the gaps in one message, and from then on the locked contract works like any contract-first setup: generated types, a check on every change, and drift caught early.
 
 ---
 
