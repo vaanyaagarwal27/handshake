@@ -130,7 +130,7 @@ Every agent message starts with a phase tag: `[DISCOVERY]` `[PROPOSAL]` `[ARBITR
 - **Human in the loop by design**: agents never settle a conflict. A human decides in one message, in the same Discord thread.
 - **One locked contract**: after the decision, backend-agent writes `contract/openapi.yaml` (OpenAPI 3) and announces `🔒 contract locked`. frontend-agent only reads it.
 - **Automatic contract checks**: the backend's real response and the frontend's generated TypeScript types are both checked against the contract, with a ✅ / ❌ for each side.
-- **Drift detection**: if a backend field is renamed later, the check fails, a human approves a contract update, and frontend-agent fixes its side.
+- **Drift detection**: if a backend field is renamed later, the contract check fails and names the exact field. The agents' drift handoff (a human approves a contract update, frontend-agent fixes its side) follows the same room rules; see [Catch Drift](#workflow-3-catch-drift).
 
 ---
 
@@ -267,6 +267,8 @@ Post this in the channel and follow [Core Workflows](#core-workflows):
 3. Both sides show ✅, and http://localhost:5173 shows the backend's real orders with "Arriving in N min" computed from `eta`.
 
 ### Workflow 3: Catch Drift
+> The contract check catching drift is tested. The agents' drift handoff follows the same rules but isn't shown in the demo video.
+
 1. Simulate a breaking backend change:
    ```bash
    ./scripts/sabotage.sh
