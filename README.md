@@ -15,8 +15,8 @@
 Built for the **Flip the Switch Hackathon** (WeMakeDevs × DevTools Academy × Switch AI) · **Track 01: Best Business Workflow** · Team **Larpers**
 
 > 🎥 **Demo video:** TODO (add link)
-> 🧪 **Evidence of a real run:** the agents' actual changes from rehearsal 1 are on the
-> [`rehearsal-1` branch (compare with main)](https://github.com/vaanyaagarwal27/handshake/compare/main...rehearsal-1).
+> 🧪 **Evidence of a real run:** the [`final-run` branch (compare with main)](https://github.com/vaanyaagarwal27/handshake/compare/main...final-run) has the contract and the code both agents wrote in the run where everything worked end to end. An earlier rehearsal is on [`rehearsal-1`](https://github.com/vaanyaagarwal27/handshake/compare/main...rehearsal-1).
+
 
 ---
 
@@ -27,7 +27,7 @@ Built for the **Flip the Switch Hackathon** (WeMakeDevs × DevTools Academy × S
 3. [Key Capabilities](#key-capabilities)
 4. [The Demo Scenario](#the-demo-scenario)
 5. [Why Switch Is Essential](#why-switch-is-essential)
-6. [Why Not Just Write the Spec First, or Use Pact?](#why-not-just-write-the-spec-first-or-use-pact)
+6. [Why Not Just Write the Spec First, or Use Pact?](Spec-first and contract-testing tools like Pact are great once a contract exists, but someone has to write it, and they write what they *think* each side does. Handshake's agents **discover** the mismatches by reading the real code on each side, so the conflict list reflects what the code actually does, not what someone remembers. A human settles the gaps in one message, and from then on the locked contract works like any contract-first setup: generated types, a check on every change, and drift caught early.
 7. [Quickstart: Run It Yourself](#quickstart-run-it-yourself)
 8. [Core Workflows](#core-workflows)
    - [Negotiate and Lock](#workflow-1-negotiate-and-lock)
@@ -381,7 +381,14 @@ In **Switch Console v0.40.1**, when an agent in a Discord-bridged room needs app
 **Workaround:** turn on **Bypass permissions** for both agents. Each agent's folder limits then come from its instructions and the room rules.
 
 ---
+## What's Next
 
+- **Enforce the boundaries, not just instruct them.** Today each agent's folder limit comes from its instructions, because Bypass permissions is on (see the Known Issue). Next step: per-agent permission deny rules or sandboxes, so an agent physically can't write outside its own folder.
+- **Show the drift handoff end to end with the agents**, not just with the scripts.
+- **Run the contract check in CI** on every pull request, so drift is caught before merge.
+- **Try it on a real codebase** with more endpoints, not just a seeded demo.
+
+---
 ## Team
 
 **Team Larpers**
