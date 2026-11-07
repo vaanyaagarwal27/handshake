@@ -1,8 +1,27 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from data import ORDERS
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
 @app.get("/orders")
-def get_orders():
-    return ORDERS
+def get_orders(
+    page: int = Query(..., ge=1),
+    limit: int = Query(..., ge=1),
+):
+    total = len(ORDERS)
+    start = (page - 1) * limit
+    end = start + limit
+    return {
+        "orders": ORDERS[start:end],
+        "page": page,
+        "limit": limit,
+        "total": total,
+    }
