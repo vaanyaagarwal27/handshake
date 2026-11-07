@@ -381,6 +381,8 @@ In **Switch Console v0.40.1**, when an agent in a Discord-bridged room needs app
 
 **Workaround:** turn on **Bypass permissions** for both agents. Each agent's folder limits then come from its instructions and the room rules.
 
+Reported upstream: [sandbox-quantum/switch#1767](https://github.com/sandbox-quantum/switch/issues/1767)
+
 ---
 ## What's Next
 
