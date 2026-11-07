@@ -13,7 +13,7 @@ Follow it top to bottom. Every command block is one paste. Three Terminal tabs:
 | Editing (Hamsini) | 45 min | 3:30 PM |
 | Review together + submit | 30 min | **6:00 PM** |
 
-Hard deadline: Nov 7, 11:59 PM IST. If it's 2:00 PM and there's no clean take, use the
+Hard deadline: Nov 7, 11:59 PM IST.
 backup video (`docs/backup-video.md`).
 
 ---
