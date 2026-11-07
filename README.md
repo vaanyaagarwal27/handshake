@@ -14,7 +14,9 @@
 
 Built for the **Flip the Switch Hackathon** (WeMakeDevs × DevTools Academy × Switch AI) · **Track 01: Best Business Workflow** · Team **Larpers**
 
-> 🎥 **Demo video:** [Watch on YouTube](https://www.youtube.com/watch?v=tXQlxYle5gc)> 🧪 **Evidence of a real run:** the [`final-run` branch (compare with main)](https://github.com/vaanyaagarwal27/handshake/compare/main...final-run) has the contract and the code both agents wrote in the run where everything worked end to end. An earlier rehearsal is on [`rehearsal-1`](https://github.com/vaanyaagarwal27/handshake/compare/main...rehearsal-1).
+> 🎥 **Demo video:** [Watch on YouTube](https://www.youtube.com/watch?v=tXQlxYle5gc)>
+>
+> 🧪 **Evidence of a real run:** the [`final-run` branch (compare with main)](https://github.com/vaanyaagarwal27/handshake/compare/main...final-run) has the contract and the code both agents wrote in the run where everything worked end to end. An earlier rehearsal is on [`rehearsal-1`](https://github.com/vaanyaagarwal27/handshake/compare/main...rehearsal-1).
 
 
 ---
